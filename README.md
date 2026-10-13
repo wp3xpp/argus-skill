@@ -4,6 +4,24 @@ Query public macro data, daily/weekly reports and bilingual author reasoning gui
 
 [Download & try](https://argusx.fun/skill/) · [API docs](https://argusx.fun/downloads/api.md) · [Research](https://argusx.fun/research/)
 
+## Install with skills.sh
+
+Codex (current project):
+
+```sh
+npx --yes skills@1.7.2 add wp3xpp/argus-skill --skill argus-research --agent codex --copy --yes
+```
+
+Claude Code (current project):
+
+```sh
+npx --yes skills@1.7.2 add wp3xpp/argus-skill --skill argus-research --agent claude-code --copy --yes
+```
+
+[skills.sh listing](https://skills.sh/wp3xpp/argus-skill/argus-research) · [Copy commands on ARGUS](https://argusx.fun/skill/#install)
+
+Both commands were tested on 2026-10-13 in isolated projects; each installed helper queried the live API. No model session is started by installation. The third-party CLI uses anonymous public-repository installation telemetry by default; opt out with `DISABLE_TELEMETRY=1` if desired. Download ZIP remains available.
+
 ## Codex
 
 Place the `argus-research` folder in your project's `.agents/skills/`. Codex discovers local skills; restart if needed. Ask:
