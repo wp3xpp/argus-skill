@@ -12,6 +12,14 @@ Place the `argus-research` folder in your project's `.agents/skills/`. Codex dis
 
 Or ask Codex's skill installer to install the `argus-research` path from `wp3xpp/argus-skill`.
 
+## Claude Code and other agents
+
+Claude Code project installation: `.claude/skills/argus-research/`; personal: `~/.claude/skills/argus-research/`. Invoke `/argus-research` followed by your request. Same bundle, no provider SDK.
+
+Other Agent Skills clients: install in their documented skill location. HTTP/function agents can use [OpenAPI 3.1](https://argusx.fun/openapi.json) directly without a skill loader or Node.
+
+[Client installation and network guide](argus-research/references/clients.md). Hosted Claude network access depends on the product: Claude API skill execution cannot directly fetch external APIs, while claude.ai uses user/admin network settings. Use an approved HTTP tool if available. Installation never expands network permissions.
+
 ## Direct helper
 
 ```sh
@@ -22,4 +30,4 @@ node argus-research/scripts/argus.mjs search type=perspective 'author=Arthur Hay
 
 Public reads only. No publishing, draft review, subscriber list access or email sending. Email subscriptions go through website consent and confirmation. Current email cadence is Sunday 18:00 Asia/Shanghai, at most one weekly digest per person; daily email is not enabled. RSS/Atom can follow daily reports. Installation does not create subscriptions or scheduled tasks.
 
-MIT applies to the skill bundle only. Retrieved data, reports and linked third-party essays retain their own rights. ARGUS author guides are editorial paraphrases, not authorized full translations. Other assistant clients have not been compatibility-tested.
+MIT applies to the skill bundle only. Retrieved data, reports and linked third-party essays retain their own rights. ARGUS author guides are editorial paraphrases, not authorized full translations. Codex downloaded-helper live queries were verified; Claude Code is standard-format supported, not yet live model-session tested. Other agents use the documented standard or public HTTP interface according to their capabilities.
