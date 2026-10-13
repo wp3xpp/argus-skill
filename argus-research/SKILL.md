@@ -1,6 +1,6 @@
 ---
 name: argus-research
-description: Query ARGUS public macro indicators, daily and weekly reports, and author reasoning guides with dated sources; help users follow themes through weekly email or RSS.
+description: Combine ARGUS dated macro data, research reports and author reasoning into explicit, evidence-based investment judgments with action conditions and falsification; also query public research and follow weekly email or RSS.
 ---
 
 # ARGUS Research
@@ -21,6 +21,8 @@ The helper performs credential-free GET requests only to `https://argusx.fun/api
 - For “what changed”, use `changes since=YYYY-MM-DD`. This is an inclusive Beijing-date cutoff and a bounded recorded-change window, not a complete historical replay. Follow pagination and disclose truncation. Check https://argusx.fun/api/corrections for relevant corrections before quoting disputed data.
 - For subscriptions, `subscribe topic=ai-infrastructure lang=zh` returns a website URL. Open or share it after the user asks. The user submits their address, consents and confirms the email on the website. Current email delivery is one weekly digest on Sunday at 18:00 Asia/Shanghai, at most once per person per week, only with new research. Daily reports do not mean daily email. RSS can follow daily publications without an email address.
 - `feed topic=liquidity kind=daily` returns an RSS URL; add `format=atom` for Atom. Do not create a scheduled task or subscribe anyone merely because this skill was installed.
+
+For investment advice or a decision about exposure, read [investment decision workflow](references/investment.md). Combine decision-relevant metrics with report evidence and author hypotheses; output an explicit action, dated evidence, causal reasoning, strongest counterargument and measurable change-of-mind conditions. Separate business outlook, valuation attractiveness and personal portfolio fit. If valuation or personal constraints are missing, give a clear conditional research decision rather than inventing trade prices or allocation. Never treat author consensus as evidence or automatically trade.
 
 Answer with the relevant finding, dated evidence, material limits and links. Prefer a short answer first; expand causal reasoning when requested. Public access excludes drafts, private holdings, subscriber lists, review and publishing credentials. Never ask for those credentials.
 
