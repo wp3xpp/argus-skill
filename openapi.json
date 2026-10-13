@@ -1,0 +1,723 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ARGUS Public Reading API",
+    "version": "1.0.1",
+    "description": "Read-only public macro research. No authentication. Metadata first; chapters on demand. No email sending, subscription mutations, drafts, private holdings or publishing tools. Literal search and bounded history; no server-side model calls."
+  },
+  "servers": [
+    {
+      "url": "https://argusx.fun"
+    }
+  ],
+  "paths": {
+    "/api/v1/catalog": {
+      "get": {
+        "operationId": "argusCatalog",
+        "summary": "List metric IDs, authors and reading/subscription capabilities",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "zh",
+                "en"
+              ],
+              "default": "zh"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "liquidity",
+                "china",
+                "ai-infrastructure",
+                "energy"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public result; preserve provenance and content scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "ETag unchanged"
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "404": {
+            "description": "No public record"
+          },
+          "503": {
+            "description": "Storage temporarily unavailable"
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "operationId": "argusSearch",
+        "summary": "Search newest public reports, published author guides and metric metadata",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "zh",
+                "en"
+              ],
+              "default": "zh"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "liquidity",
+                "china",
+                "ai-infrastructure",
+                "energy"
+              ]
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "report",
+                "perspective",
+                "metric"
+              ]
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "daily",
+                "weekly"
+              ]
+            }
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 80
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "default": 5
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public result; preserve provenance and content scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "ETag unchanged"
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "404": {
+            "description": "No public record"
+          },
+          "503": {
+            "description": "Storage temporarily unavailable"
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/metrics/{id}": {
+      "get": {
+        "operationId": "argusMetric",
+        "summary": "Read dated metric values, sources, verification and optional history",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "zh",
+                "en"
+              ],
+              "default": "zh"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "history",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "0"
+            }
+          },
+          {
+            "name": "points",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public result; preserve provenance and content scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "ETag unchanged"
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "404": {
+            "description": "No public record"
+          },
+          "503": {
+            "description": "Storage temporarily unavailable"
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/content/{id}": {
+      "get": {
+        "operationId": "argusContent",
+        "summary": "Read content section directory, then selected section; guide is not third-party full text",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "URL-encode ID, e.g. ai-infrastructure:2026-10-12:daily or perspective:hayes-safety-first"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "zh",
+                "en"
+              ],
+              "default": "zh"
+            }
+          },
+          {
+            "name": "section",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public result; preserve provenance and content scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "ETag unchanged"
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "404": {
+            "description": "No public record"
+          },
+          "503": {
+            "description": "Storage temporarily unavailable"
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/changes": {
+      "get": {
+        "operationId": "argusChanges",
+        "summary": "Read bounded recorded changes since inclusive Beijing date",
+        "parameters": [
+          {
+            "name": "since",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "zh",
+                "en"
+              ],
+              "default": "zh"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "liquidity",
+                "china",
+                "ai-infrastructure",
+                "energy"
+              ]
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "report",
+                "perspective",
+                "metric"
+              ]
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "daily",
+                "weekly"
+              ]
+            }
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 80
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "default": 5
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public result; preserve provenance and content scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "ETag unchanged"
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "404": {
+            "description": "No public record"
+          },
+          "503": {
+            "description": "Storage temporarily unavailable"
+          }
+        },
+        "security": []
+      }
+    },
+    "/feeds/research.xml": {
+      "get": {
+        "operationId": "argusRss",
+        "summary": "Latest 50 filtered research/guide entries; stable IDs and source dates",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "zh",
+                "en"
+              ],
+              "default": "zh"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "liquidity",
+                "china",
+                "ai-infrastructure",
+                "energy"
+              ]
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "report",
+                "perspective",
+                "metric"
+              ]
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "daily",
+                "weekly"
+              ]
+            }
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public result; preserve provenance and content scope",
+            "content": {
+              "application/rss+xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "ETag unchanged"
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "404": {
+            "description": "No public record"
+          },
+          "503": {
+            "description": "Storage temporarily unavailable"
+          }
+        },
+        "security": []
+      }
+    },
+    "/feeds/atom.xml": {
+      "get": {
+        "operationId": "argusAtom",
+        "summary": "Atom version of the filtered public research feed",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "zh",
+                "en"
+              ],
+              "default": "zh"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "liquidity",
+                "china",
+                "ai-infrastructure",
+                "energy"
+              ]
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "report",
+                "perspective",
+                "metric"
+              ]
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "daily",
+                "weekly"
+              ]
+            }
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public result; preserve provenance and content scope",
+            "content": {
+              "application/atom+xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "ETag unchanged"
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "404": {
+            "description": "No public record"
+          },
+          "503": {
+            "description": "Storage temporarily unavailable"
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "security": []
+}
