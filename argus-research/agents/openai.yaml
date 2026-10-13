@@ -1,0 +1,4 @@
+interface:
+  display_name: "ARGUS Research"
+  short_description: "Read dated macro data, reports and author reasoning"
+  default_prompt: "Use $argus-research to find the latest AI infrastructure report and explain its evidence with sources."
