@@ -5,6 +5,11 @@ const topics=['liquidity','china','ai-infrastructure','energy'];
 export function route(argv){const [command,...args]=argv;const params=new URLSearchParams();let id;
  for(const a of args){const eq=a.indexOf('=');if(eq<0){if(id)throw Error('Only one ID allowed');id=a;}else params.set(a.slice(0,eq),a.slice(eq+1));}
  if(!command||command==='help')return {help:true};
+ const common=['lang','topic','type','kind','author','q','from','to','limit','offset'];
+ const allowed={catalog:['lang','topic'],search:common,changes:[...common,'since'],metric:['lang','from','to','history','points'],content:['lang','section'],subscribe:['lang','topic'],feed:['lang','topic','type','kind','author','format']};
+ if(!allowed[command])throw Error('Unknown command; run help');
+ if([...params.keys()].some(k=>!allowed[command].includes(k)))throw Error('Unknown filter; no credentials or personal data accepted');
+
  if(command==='subscribe'){const topic=params.get('topic')??'all',lang=params.get('lang')??'zh';if(!['all',...topics].includes(topic)||!['en','zh'].includes(lang))throw Error('Invalid topic or language');return {url:base+(lang==='en'?'/en':'')+'/subscribe/?topic='+topic+'&source=skill',local:true,cadence:'Sunday 18:00 Asia/Shanghai; weekly digest, double opt-in; no daily email'};}
  if(command==='feed'){const format=params.get('format')??'rss';if(!['rss','atom'].includes(format))throw Error('format=rss|atom');params.delete('format');return {url:base+'/feeds/'+(format==='atom'?'atom':'research')+'.xml?'+params,local:true};}
  const paths={catalog:'/api/v1/catalog',search:'/api/v1/search',changes:'/api/v1/changes',metric:'/api/v1/metrics/',content:'/api/v1/content/'};
