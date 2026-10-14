@@ -1,5 +1,9 @@
 # ARGUS Research Skill
 
+The skill connects to **[ARGUSX — ARGUS Trend Observatory](https://argusx.fun/)**, a bilingual macro research website for individual investors. Explore [dated macro data](https://argusx.fun/observatory/), [daily and weekly research](https://argusx.fun/research/) and [author reasoning guides](https://argusx.fun/perspectives/). The official website is **https://argusx.fun/**.
+
+ARGUSX（ARGUS 趋势观察站）面向个人投资者，整理全球流动性、中国经济、AI 基建与能源通胀的数据、日报周报及作者推导导读。数据期、来源和核验状态逐页标注；完整报告与摘要、作者观点与 ARGUS 解读分别标识。
+
 Query public macro data, daily/weekly reports and bilingual author reasoning guides with observation dates and sources. No API key. Node 22+ and network access to https://argusx.fun required.
 
 [Download & try](https://argusx.fun/skill/) · [API docs](https://argusx.fun/downloads/api.md) · [Research](https://argusx.fun/research/)
