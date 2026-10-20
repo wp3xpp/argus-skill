@@ -1,4 +1,26 @@
-# ARGUS Research Skill
+# ARGUSX Research Skill
+
+## Follow the money behind AI infrastructure
+
+**Everyone tracks AI spending. Who’s tracking the debt?**
+
+ARGUSX brings dated financial data and research into your browser, Codex or Claude Code. Start with Microsoft, Amazon, Alphabet and Meta: inspect debt, leases and cash after CapEx, then follow the sources. Company-wide figures are clearly distinguished from AI-only exposure.
+
+[Explore the AI debt guide](https://argusx.fun/en/guides/ai-infrastructure-debt/?utm_source=github&utm_medium=repository&utm_campaign=readme) · [Try the research skill](https://argusx.fun/en/skill/?utm_source=github&utm_medium=repository&utm_campaign=readme)
+
+> Compare available AI infrastructure debt and cash-flow data. Cite dates and sources. Flag gaps and differences in definitions.
+
+No ARGUS API key. Node 22+ for the helper. Your assistant’s own usage charges still apply.
+
+**都在看 AI 花了多少钱。谁在看债务？**
+
+ARGUSX 把债务、租赁和资本开支后的现金放在一起看，保留公司、数据期、口径和来源。可以直接看网站，也可以通过 Skill 让助手查询。公司整体财务不等于 AI 专项数据，缺失与口径差异明确标注。
+
+[查看债务专题](https://argusx.fun/guides/ai-infrastructure-debt/?utm_source=github&utm_medium=repository&utm_campaign=readme) · [安装 Skill](https://argusx.fun/skill/?utm_source=github&utm_medium=repository&utm_campaign=readme)
+
+---
+
+## Documentation
 
 The skill connects to **[ARGUSX — ARGUS Trend Observatory](https://argusx.fun/)**, a bilingual macro research website for individual investors. Explore [dated macro data](https://argusx.fun/observatory/), [daily and weekly research](https://argusx.fun/research/) and [author reasoning guides](https://argusx.fun/perspectives/). The official website is **https://argusx.fun/**.
 
