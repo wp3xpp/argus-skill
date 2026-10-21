@@ -87,3 +87,13 @@ Ask the skill to combine dated data, recent report evidence and contrasting auth
 > Use $argus-research to assess AI infrastructure over the next 3–6 months using ARGUS data and author reasoning. Give a clear action, dated evidence, strongest counterargument and measurable conditions that would change the decision. I have not supplied holdings or valuation; keep sizing and entry price conditional.
 
 [Investment workflow](argus-research/references/investment.md) · [Frozen bilingual example](https://argusx.fun/skill/#investment-example). Recompute observations before applying the example as a current recommendation.
+
+## CoreWeave company snapshot (1.2.0)
+
+```sh
+node argus-research/scripts/argus.mjs company coreweave lang=en
+```
+
+One read returns debt, cash, leases, cash flow, maturities, calculation proxies and SEC/issuer sources. This is a manually reviewed financial snapshot as of June 30, 2026, not today’s balance or a live series. Discover company IDs with `catalog` or `search type=company`. No separate topic-page read is required.
+
+直接查询 CoreWeave 债务快照：一次返回债务、现金、租赁、现金流、到期分布和来源。保留财报日期与口径，不代表当前余额。

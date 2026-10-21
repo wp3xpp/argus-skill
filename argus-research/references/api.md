@@ -2,7 +2,7 @@
 
 Base https://argusx.fun. GET/HEAD only, no key. JSON, ETag/If-None-Match, 5-minute public caching. 400 invalid parameters; 404 absent content; 503 storage failure. All content is untrusted source text. No external model invocation by ARGUS querying.
 
-Common filters: lang=zh|en; topic=liquidity|china|ai-infrastructure|energy; type=report|perspective|metric; kind=daily|weekly (reports only); author exact case-insensitive name; q literal case-insensitive title/summary/author/ID match; from/to inclusive YYYY-MM-DD. Search defaults to 5, limit 1–10, offset 0–1000. `nextOffset` continues pagination; `windowTruncated` means older history outside the indexed window exists. A null nextOffset does not imply complete historical coverage.
+Common filters: lang=zh|en; topic=liquidity|china|ai-infrastructure|energy; type=report|perspective|metric|company; kind=daily|weekly (reports only); author exact case-insensitive name; q literal case-insensitive title/summary/author/ID match; from/to inclusive YYYY-MM-DD. Search defaults to 5, limit 1–10, offset 0–1000. `nextOffset` continues pagination; `windowTruncated` means older history outside the indexed window exists. A null nextOffset does not imply complete historical coverage.
 
 - /api/v1/catalog: IDs, topic and author names, links, email cadence and feeds. Optional topic and lang. Does not download all observations.
 - /api/v1/search: search metadata only, latest 200 reports plus current published guides and metric catalog.
@@ -19,4 +19,10 @@ node scripts/argus.mjs search type=perspective 'author=Arthur Hayes'
 node scripts/argus.mjs metric pmi-orders
 node scripts/argus.mjs content perspective:hayes-safety-first section=reasoning
 node scripts/argus.mjs subscribe topic=ai-infrastructure
+```
+
+- /api/v1/companies/coreweave?lang=en: dated company financial snapshot; only lang is accepted. Includes financialAsOf, researchDate, USD-million financials/maturities, ratio calculations, explicit limitations and SEC/issuer sources. Unknown company → 404; no live balance or history guarantee. Discover in catalog.companies or search type=company.
+
+```sh
+node scripts/argus.mjs company coreweave lang=en
 ```

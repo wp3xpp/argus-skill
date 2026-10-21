@@ -6,14 +6,14 @@ export function route(argv){const [command,...args]=argv;const params=new URLSea
  for(const a of args){const eq=a.indexOf('=');if(eq<0){if(id)throw Error('Only one ID allowed');id=a;}else params.set(a.slice(0,eq),a.slice(eq+1));}
  if(!command||command==='help')return {help:true};
  const common=['lang','topic','type','kind','author','q','from','to','limit','offset'];
- const allowed={catalog:['lang','topic'],search:common,changes:[...common,'since'],metric:['lang','from','to','history','points'],content:['lang','section'],subscribe:['lang','topic'],feed:['lang','topic','type','kind','author','format']};
+ const allowed={catalog:['lang','topic'],search:common,changes:[...common,'since'],metric:['lang','from','to','history','points'],company:['lang'],content:['lang','section'],subscribe:['lang','topic'],feed:['lang','topic','type','kind','author','format']};
  if(!allowed[command])throw Error('Unknown command; run help');
  if([...params.keys()].some(k=>!allowed[command].includes(k)))throw Error('Unknown filter; no credentials or personal data accepted');
 
  if(command==='subscribe'){const topic=params.get('topic')??'all',lang=params.get('lang')??'zh';if(!['all',...topics].includes(topic)||!['en','zh'].includes(lang))throw Error('Invalid topic or language');return {url:base+(lang==='en'?'/en':'')+'/subscribe/?topic='+topic+'&source=skill',local:true,cadence:'Sunday 18:00 Asia/Shanghai; weekly digest, double opt-in; no daily email'};}
  if(command==='feed'){const format=params.get('format')??'rss';if(!['rss','atom'].includes(format))throw Error('format=rss|atom');params.delete('format');return {url:base+'/feeds/'+(format==='atom'?'atom':'research')+'.xml?'+params,local:true};}
- const paths={catalog:'/api/v1/catalog',search:'/api/v1/search',changes:'/api/v1/changes',metric:'/api/v1/metrics/',content:'/api/v1/content/'};
- if(!paths[command])throw Error('Unknown command; run help');if(['metric','content'].includes(command)&&!id)throw Error('ID required');if(!['metric','content'].includes(command)&&id)throw Error('Use key=value filters');
+ const paths={catalog:'/api/v1/catalog',search:'/api/v1/search',changes:'/api/v1/changes',metric:'/api/v1/metrics/',company:'/api/v1/companies/',content:'/api/v1/content/'};
+ if(!paths[command])throw Error('Unknown command; run help');if(['metric','content','company'].includes(command)&&!id)throw Error('ID required');if(!['metric','content','company'].includes(command)&&id)throw Error('Use key=value filters');
  return {url:base+paths[command]+(id?encodeURIComponent(id):'')+(params.size?'?'+params:'')};
 }
 const maxBytes=1_000_000;
@@ -29,7 +29,7 @@ async function readJson(response){
  if(!value||typeof value!=='object'||Array.isArray(value))throw Error('Expected an ARGUS JSON object');
  return value;
 }
-export async function run(argv,fetcher=fetch){const r=route(argv);if(r.help)return {usage:['catalog [topic=china] [lang=en]','search [type=report|perspective|metric] [topic=...] [kind=daily|weekly] [author=Arthur Hayes] [q=...] [from=YYYY-MM-DD] [to=...] [limit=5] [offset=0]','metric ID [history=1] [points=100] [from=...] [to=...] [lang=en]','content ID [section=SECTION_ID] [lang=en]','changes since=YYYY-MM-DD [topic=...] [limit=5] [offset=0]','subscribe [topic=all] [lang=zh]','feed [topic=...] [kind=daily|weekly] [type=report|perspective] [author=...] [lang=en] [format=rss|atom]'],readOnly:true};
+export async function run(argv,fetcher=fetch){const r=route(argv);if(r.help)return {usage:['catalog [topic=china] [lang=en]','search [type=report|perspective|metric|company] [topic=...] [kind=daily|weekly] [author=Arthur Hayes] [q=...] [from=YYYY-MM-DD] [to=...] [limit=5] [offset=0]','metric ID [history=1] [points=100] [from=...] [to=...] [lang=en]','company ID [lang=en]','content ID [section=SECTION_ID] [lang=en]','changes since=YYYY-MM-DD [topic=...] [limit=5] [offset=0]','subscribe [topic=all] [lang=zh]','feed [topic=...] [kind=daily|weekly] [type=report|perspective] [author=...] [lang=en] [format=rss|atom]'],readOnly:true};
  if(r.local)return r;
  const url=new URL(r.url);if(url.origin!==base||!url.pathname.startsWith('/api/v1/'))throw Error('Only ARGUS public API reads are allowed');
  const response=await fetcher(url.href,{method:'GET',credentials:'omit',referrerPolicy:'no-referrer',headers:{Accept:'application/json'},signal:AbortSignal.timeout(15000),redirect:'error'});

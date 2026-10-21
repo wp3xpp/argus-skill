@@ -113,7 +113,8 @@
               "enum": [
                 "report",
                 "perspective",
-                "metric"
+                "metric",
+                "company"
               ]
             }
           },
@@ -427,7 +428,8 @@
               "enum": [
                 "report",
                 "perspective",
-                "metric"
+                "metric",
+                "company"
               ]
             }
           },
@@ -571,7 +573,8 @@
               "enum": [
                 "report",
                 "perspective",
-                "metric"
+                "metric",
+                "company"
               ]
             }
           },
@@ -665,7 +668,8 @@
               "enum": [
                 "report",
                 "perspective",
-                "metric"
+                "metric",
+                "company"
               ]
             }
           },
@@ -716,6 +720,52 @@
           }
         },
         "security": []
+      }
+    },
+    "/api/v1/companies/{id}": {
+      "get": {
+        "operationId": "getCompanySnapshot",
+        "summary": "Get a dated company debt and cash-flow snapshot; not current balances",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "coreweave"
+              ]
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "zh",
+                "en"
+              ],
+              "default": "zh"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "USD-million financials and maturities, ratios, financialAsOf/researchDate, limitations and source links",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Company not found"
+          }
+        }
       }
     }
   },
